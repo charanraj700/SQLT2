@@ -1,0 +1,187 @@
+// SQL TASK-2
+
+
+SQL> create table students2(student_id int primary key, first_name varchar(50), last_name varchar(50), date_of_birth date, gender varchar(10), email varchar(100), phone_number int);
+
+Table created.
+
+SQL> create table courses2(course_id int primary key, course_name varchar(100), course_code varchar(20), credits int);
+
+Table created.
+
+SQL> create table enrollments2(enrollment_id int primary key, student_id int, course
+  2  ;
+
+*
+ERROR at line 2:
+ORA-00907: missing right parenthesis
+
+
+SQL> create table enrollments2(enrollment_id int primary key, student_id int, course_id int, enrollment_date date, grade varchar(10), foreign key (student_id) references students2(student_id), foreign key (course_id) references courses2(course_id));
+
+Table created.
+
+SQL> insert into students2(student_id, first_name, last_name, da
+te_of_birth, gender, email, phone_number) values(11111, 'charan'
+, 'raj', to_date('2004-10-21','yyyy-mm-dd'), 'male', 'charanraj@
+gmail.com', 8888877999);
+
+1 row created.
+
+SQL> insert into students2(student_id, first_name, last_name, date_of_birth, gender, email, phone_number) values(22222, 'arun', 'raj', to_date('2005-11-22','yyyy-mm-dd'), 'male', 'arunraj@gmail.com', 8888866333);
+
+1 row created.
+
+SQL> insert into students2(student_id, first_name, last_name, date_of_birth, gender, email, phone_number) values(33333, 'rishitha', 'gaddam', to_date('2005-10-04','yyyy-mm-dd'), 'female', 'rishithagaddam@gmail.com', 8832822233);
+
+1 row created.
+
+SQL> insert into students2(student_id, first_name, last_name, date_of_birth, gender, email, phone_number) values(44444, 'peter', 'parker', to_date('2006-06-04','yyyy-mm-dd'), 'male', 'peterparker@gmail.com', 8838742233);
+
+1 row created.
+
+SQL> insert into courses2(course_id, course_name, course_code, c
+redits) values(1, 'computer_science', 'cs11', 4);
+
+1 row created.
+
+SQL> insert into courses2(course_id, course_name, course_code, credits) values(2, 'data_science', 'ds11', 3);
+
+1 row created.
+
+SQL> insert into courses2(course_id, course_name, course_code, credits) values(3, 'mathematics', 'm11', 4);
+
+1 row created.
+
+SQL> insert into enrollments2(enrollment_id, student_id, course_
+id, enrollment_date, grade) values(11, 11111, 1, to_date('2018-1
+1-19','yyyy-mm-dd'), 'A');
+
+1 row created.
+
+SQL> insert into enrollments2(enrollment_id, student_id, course_id, enrollment_date, grade) values(22, 22222, 2, to_date('2017-1
+2-20','yyyy-mm-dd'), 'B');
+
+1 row created.
+
+SQL> insert into enrollments2(enrollment_id, student_id, course_id, enrollment_date, grade) values(33, 33333, 3, to_date('2020-1
+0-20','yyyy-mm-dd'), 'A+');
+
+1 row created.
+
+SQL> insert into enrollments2(enrollment_id, student_id, course_id, enrollment_date, grade) values(44, 44444, 2, to_date('2018-0
+6-30','yyyy-mm-dd'), 'C');
+
+1 row created.
+
+SQL> SELECT s.student_id, s.first_name, s.last_name, c.course_na
+me, e.grade FROM students2 s JOIN enrollments2 e ON s.student_id
+ = e.student_id JOIN courses2 c ON e.course_id = c.course_id WHE
+RE s.student_id = 11111 AND s.first_name = 'arun' AND s.last_nam
+e = 'raj' AND c.course_name = 'computer_science' AND e.grade = '
+A';
+
+no rows selected
+
+SQL> SELECT s.student_id, s.first_name, s.last_name, c.course_name, e.grade FROM students2 s JOIN enrollments2 e ON s.student_id = e.student_id JOIN courses2 c ON e.course_id = c.course_id WHERE s.student_id = 11111 AND s.first_name = 'arun' AND s.last_name = 'raj' AND c.course_name = 'computer_science' AND e.grade = 'B';
+
+no rows selected
+
+SQL> SELECT s.student_id, s.first_name, s.last_name, c.course_name, e.grade FROM students2 s JOIN enrollments2 e ON s.student_id = e.student_id JOIN courses2 c ON e.course_id = c.course_id WHERE s.student_id = 22222 AND s.first_name = 'arun' AND s.last_name = 'raj' AND c.course_name = 'computer_science' AND e.grade = 'B';
+
+no rows selected
+
+SQL> SELECT s.student_id, s.first_name, s.last_name, c.course_name, e.grade FROM students2 s JOIN enrollments2 e ON s.student_id = e.student_id JOIN courses2 c ON e.course_id = c.course_id WHERE s.student_id = 22222 AND s.first_name = 'arun' AND s.last_name = 'raj' AND c.course_name = 'computer_science' AND e.grade = 'A';
+
+no rows selected
+
+SQL> SELECT s.student_id, s.first_name, s.last_name, c.course_name, e.grade FROM students2 s JOIN enrollments2 e ON s.student_id = e.student_id JOIN courses2 c ON e.course_id = c.course_id WHERE s.student_id = 11111 AND s.first_name = 'charan' AND s.last_name = 'raj' AND c.course_name = 'computer_science' AND e.grade = 'A';
+
+STUDENT_ID FIRST_NAME
+---------- --------------------------------------------------
+LAST_NAME
+--------------------------------------------------
+COURSE_NAME
+--------------------------------------------------------------------------------
+GRADE
+----------
+     11111 charan
+raj
+computer_science
+A
+
+
+SQL> SELECT s.student_id, s.first_name, s.last_name, c.course_name, e.grade FROM students2 s JOIN enrollments2 e ON s.student_id = e.student_id JOIN courses2 c ON e.course_id = c.course_id WHERE s.student_id = 44444 AND s.first_name = 'peter' AND s.last_name = 'parker' AND c.course_name = 'mathematics' AND e.grade = 'c';
+
+no rows selected
+
+SQL> SELECT s.student_id, s.first_name, s.last_name, c.course_name, e.grade FROM students2 s JOIN enrollments2 e ON s.student_id = e.student_id JOIN courses2 c ON e.course_id = c.course_id WHERE s.student_id = 33333 AND s.first_name = 'peter' AND s.last_name = 'parker' AND c.course_name = 'mathematics' AND e.grade = 'C';
+
+no rows selected
+
+SQL> SELECT s.student_id, s.first_name, s.last_name, c.course_name, e.grade FROM students2 s JOIN enrollments2 e ON s.student_id = e.student_id JOIN courses2 c ON e.course_id = c.course_id WHERE s.student_id = 33333 AND s.first_name = 'peter' AND s.last_name = 'parker' AND c.course_name = 'mathematics' AND e.grade = 'B';
+
+no rows selected
+
+SQL> SELECT s.student_id, s.first_name, s.last_name, c.course_name, e.grade FROM students2 s JOIN enrollments2 e ON s.student_id = e.student_id JOIN courses2 c ON e.course_id = c.course_id WHERE s.student_id = 44444 AND s.first_name = 'peter' AND s.last_name = 'parker' AND c.course_name = 'mathematics' AND e.grade = 'B';
+
+no rows selected
+
+SQL> SELECT s.student_id, s.first_name, s.last_name, c.course_name, e.grade FROM students2 s JOIN enrollments2 e ON s.student_id = e.student_id JOIN courses2 c ON e.course_id = c.course_id WHERE s.student_id = 33333 AND s.first_name = 'rishitha' AND s.last
+_name = 'gaddam' AND c.course_name = 'mathematics' AND e.grade =
+ 'C';
+
+no rows selected
+
+SQL> SELECT s.student_id, s.first_name, s.last_name, c.course_name, e.grade FROM students2 s JOIN enrollments2 e ON s.student_id = e.student_id JOIN courses2 c ON e.course_id = c.course_id WHERE s.student_id = 33333 AND s.first_name = 'rishitha' AND s.last_name = 'gaddam' AND c.course_name = 'mathematics' AND e.grade = 'B';
+
+no rows selected
+
+SQL> SELECT c.course_name, c.course_code, s.first_name, s.last_name, e.grade FROM courses2 c JOIN enrollments2 e ON c.course_id = e.course_id JOIN students2 s ON e.student_id = s.student_id where c.course_name=’computer_science’ and c.course_code=’cs11’ and s.first_name=’charan’ and s.last_name=’raj’ and e.grade=’A’;
+
+COURSE_NAME
+--------------------------------------------------------------------------------
+COURSE_CODE          FIRST_NAME
+-------------------- --------------------------------------------------
+LAST_NAME                                          GRADE
+-------------------------------------------------- ----------
+computer_science
+cs11                 charan
+raj                                                A
+
+
+SQL> SELECT s.first_name, s.last_name, e.grade FROM students2 s JOIN enrollments2 e ON s.student_id = e.student_id JOIN courses2 c ON e.course_id = c.course_id WHERE c.course_id = 'cs11' and s.first_name=’charan’ and s.last_name=’raj’ and e.grade=’A’;
+SELECT s.first_name, s.last_name, e.grade FROM students2 s JOIN enrollments2 e ON s.student_id = e.student_id JOIN courses2 c ON e.course_id = c.course_id WHERE c.course_id = 'cs11' and s.first_name='charan' and s.last_name='raj' and e.grade='A'
+
+                                                                                                               *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> SELECT c.course_id, s.first_name, s.last_name, e.grade FROM students2 s JOIN enrollments2 e ON s.student_id = e.student_id JOIN courses2 c ON e.course_id = c.course_id WHERE c.course_id = 'cs11' and s.first_name=’charan’ and s.last_name=’raj’ and e.grade=’A’;
+SELECT c.course_id, s.first_name, s.last_name, e.grade FROM students2 s JOIN enrollments2 e ON s.student_id = e.student_id JOIN courses2 c ON e.course_id = c.course_id WHERE c.course_id = 'cs11' and s.first_name='charan' and s.last_name='raj' and e.grade='A'
+
+
+                                                            *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> SELECT c.course_id, s.first_name, s.last_name, e.grade FROM students2 s JOIN enrollments2 e ON s.student_id = e.student_id JOIN courses2 c ON e.course_id = c.course_id WHERE c.course_id = '1' and s.first_name=’charan’ and s.last_name=’raj’ and e.grade
+=’A’;
+
+ COURSE_ID FIRST_NAME
+---------- --------------------------------------------------
+LAST_NAME                                          GRADE
+-------------------------------------------------- ----------
+         1 charan
+raj                                                A
+
+
+SQL> UPDATE enrollments2 SET grade = 'B' WHERE student_id = 11111 AND course_id = 1;
+
+1 row updated.
+
+SQL> DELETE FROM enrollments2 WHERE student_id = 11111 AND course_id = 1;
+
+1 row deleted.
